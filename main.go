@@ -14,17 +14,22 @@ import (
 
 var exprList = []expr.AssignExpr{}
 
-const COMPILE_TIME = "2024年 4月10日 星期三 20时21分11秒 CST"
+var COMPILE_TIME = "Sat Apr 13 23:09:00 CST 2024"
 
 func main() {
 	var (
 		file string
 		buf  bytes.Buffer
 	)
+	var flagVersion bool
 	// 定义-f file参数
 	flag.StringVar(&file, "f", "", "optional file path")
-	flag.BoolFunc("v", "print version", func(_ string) error { fmt.Println(COMPILE_TIME); os.Exit(0); return nil })
+	flag.BoolVar(&flagVersion, "v", false, "show version")
 	flag.Parse()
+	if flagVersion {
+		fmt.Println(COMPILE_TIME)
+		os.Exit(0)
+	}
 
 	args := flag.Args()
 	for _, arg := range args {
